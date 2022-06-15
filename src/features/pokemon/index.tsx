@@ -1,4 +1,6 @@
 import styled from "@emotion/styled";
+import { ListResponse } from "../../types";
+import { formatNumbering } from "../../utils";
 import usePokemon from "./usePokmon";
 
 
@@ -63,12 +65,7 @@ const getImageUrl = (pokemonIndex: number): string =>
   
   const PokemonList = () => {
       
-    const {data, isLoading, isError} = usePokemon('');
-
-    const formatNumbering = (index : number) : string => {
-        return `#${String(index).padStart(3,'0')}`;
-    }
-
+    const {data, isLoading, isError} = usePokemon<ListResponse>('');
     return(
         <Base>
         {

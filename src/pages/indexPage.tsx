@@ -1,5 +1,4 @@
 import styled from "@emotion/styled"
-import PoketmonList from "../components/PoketmonList"
 import PokemonList from "../features/pokemon";
 
 const Base = styled.div`

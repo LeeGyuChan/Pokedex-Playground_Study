@@ -1,11 +1,10 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { useQuery } from "react-query"
 import { pokemonApi } from "../../apis/pokemonApi";
-import { ListResponse, PokemonResponse } from "../../types";
+import { UseQueryResult } from 'react-query/types/react/types';
 
-const usePokemon = (query:string) => {
 
-    return useQuery<AxiosResponse<ListResponse>, AxiosError>(query ? ['pokemon', query] : 'pokemon', () => pokemonApi(query));
-}
+const usePokemon = <T = any>(query:string) :  UseQueryResult<AxiosResponse<T>, AxiosError> => useQuery(query ? ['pokemon', query] : 'pokemon', () => pokemonApi(query));
+
 
 export default usePokemon
