@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react'
-import { Color } from '../types';
+import { usePokemonQueries } from '../features/pokemon/usePokmon';
+import { Color, PokemonResponse } from '../types';
 import { mapColorToHex } from '../utils';
 
 
@@ -57,17 +58,20 @@ interface Props {
 
 
 export default function EvolutionStage({from, to, level, color}:Props) {
+
+  const [prev, next] = usePokemonQueries<PokemonResponse>([from.name, to.name]);
+
   return (
     <Base>
     <ImageWrapper>
-      
+      <Image src={prev.data?.data.sprites.other['official-artwork'].front_default}/>
     </ImageWrapper>
     <DividerWrapper>
       {level && <Text color={mapColorToHex(color?.name)}>{`Level ${level}`}</Text>}
       <Divider />
     </DividerWrapper>
     <ImageWrapper>
-      
+      <Image src={next.data?.data.sprites.other['official-artwork'].front_default}/>
     </ImageWrapper>
   </Base>
   )

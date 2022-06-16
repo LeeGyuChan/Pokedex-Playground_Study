@@ -9,7 +9,7 @@ const useAbilities= <T = any>(abilities:Array<Ability>) :  Array<UseQueryResult<
     {
         const queries  = abilities.map(({ability}, idx)=>(
             {
-                queryKey : ['ability', idx],
+                queryKey : ['ability', `${ability.name}_${idx}`],
                 queryFn : () => axios.get(ability.url)
             }
         ))

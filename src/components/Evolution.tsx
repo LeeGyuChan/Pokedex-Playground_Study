@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import useEvolutionChain from '../hooks/useEvolutionChain';
 import { Chain, Color, EvolutionChainResponse } from '../types';
 import { mapColorToHex } from '../utils';
+import EvolutionStage from './EvolutionStage';
 
 const Base = styled.div`
   margin-top: 32px;
@@ -99,11 +100,11 @@ export default function Evolution({color, url}:Props) {
       ) : (
         evolutionChain.length ? (
           <List>
-            {/* {
+             {
               evolutionChain.map(({ from, to, level }, idx) => (
                 <EvolutionStage key={idx} from={from} to={to} level={level} color={color} />
               ))
-            } */}
+            }
           </List>
         ) : (
           <EmptyWrapper>

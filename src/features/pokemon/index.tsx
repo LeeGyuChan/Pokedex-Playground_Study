@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 import { ListResponse } from "../../types";
 import { formatNumbering } from "../../utils";
 import usePokemon from "./usePokmon";
@@ -6,6 +7,16 @@ import usePokemon from "./usePokmon";
 
 const Base = styled.div`
 margin-top: 24px;
+`;
+
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    display: block;
+    
+    & + & {
+        margin-top: 18px;
+    }
 `;
 
 const ListItem = styled.li`
@@ -16,9 +27,6 @@ align-items: center;
 box-shadow: 6px 4px 14px 5px rgba(0,0,0,0.21);
 border-radius: 12px;
 
-& + & {
-    margin-top: 18px;
-}
 `;
 
 const List = styled.ul`
@@ -77,11 +85,13 @@ const getImageUrl = (pokemonIndex: number): string =>
                 <List>
                     {
                         data?.data.results.map( (pokemon, idx) =>(
-                        <ListItem key={pokemon.name}>
-                            <Image src={getImageUrl(idx +1)}/>
-                            <Name>{pokemon.name}</Name>
-                            <Index>{formatNumbering(idx+1)}</Index>
-                        </ListItem>
+                            <StyledLink to={`/${idx+1}`}>
+                                <ListItem key={pokemon.name}>
+                                    <Image src={getImageUrl(idx +1)}/>
+                                    <Name>{pokemon.name}</Name>
+                                    <Index>{formatNumbering(idx+1)}</Index>
+                                </ListItem>
+                        </StyledLink>
                         ))
                     }
             </List>
