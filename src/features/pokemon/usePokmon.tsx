@@ -1,10 +1,28 @@
 import { AxiosError, AxiosResponse } from "axios";
-import { useQueries, useQuery } from "react-query"
-import { pokemonApi } from "../../apis/pokemonApi";
+import { useInfiniteQuery, useQueries, useQuery } from "react-query"
+import { pokemonApi, pokemon2Api } from "../../apis/pokemonApi";
 import { UseQueryResult } from 'react-query/types/react/types';
+import { ListResponse } from "../../types";
+import axiosInstance from "../../apis";
 
+// export const usePokemonPage = (query:string) => useInfiniteQuery<AxiosResponse<ListResponse, AxiosError>>('pokemons' , ({pageParam = 150})=>  axiosInstance.get(`/pokemon/${query}`, {params:{limit:pageParam}}),
+//     {
+//         getNextPageParam : (lastPage, allPage) => {
+//             return 300;
+//         }
+//     }
+// )
 
-const usePokemon = <T = any>(query:string) :  UseQueryResult<AxiosResponse<T>, AxiosError> => useQuery(query ? ['pokemon', query] : 'pokemon', () => pokemonApi(query));
+export const usePokemonPage = (query:string) => useInfiniteQuery<AxiosResponse<ListResponse, AxiosError>>('pokemons' , ({pageParam = 150})=>  pokemon2Api(query, pageParam),
+    {
+        getNextPageParam : (lastPage, allPage) => {
+            return 300;
+        }
+    }
+)
+
+const usePokemon = <T = any>(query:string, count? : number) :  UseQueryResult<AxiosResponse<T>, AxiosError> => useQuery(query ? ['pokemon', query] : 'pokemon', () => pokemonApi(query, count));
+
 
 
 export const usePokemonQueries = <T = any>(names:string[]) : Array<UseQueryResult<AxiosResponse<T>, AxiosError>> => {

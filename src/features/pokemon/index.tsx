@@ -1,8 +1,10 @@
 import styled from "@emotion/styled";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
 import { ListResponse } from "../../types";
 import { formatNumbering } from "../../utils";
-import usePokemon from "./usePokmon";
+import usePokemon, { usePokemonPage } from "./usePokmon";
 
 
 const Base = styled.div`
@@ -73,7 +75,18 @@ const getImageUrl = (pokemonIndex: number): string =>
   
   const PokemonList = () => {
       
-    const {data, isLoading, isError} = usePokemon<ListResponse>('');
+    //const {data, isLoading, isError} = usePokemon<ListResponse>('');
+    const [ref, inView] = useInView()
+    const {data, isLoading, isError, fetchNextPage} = usePokemonPage('');
+
+    useEffect(() => {
+        // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
+        if (inView) {
+            console.log(inView);
+            fetchNextPage()
+        }
+      }, [inView])
+
     return(
         <Base>
         {
@@ -84,16 +97,38 @@ const getImageUrl = (pokemonIndex: number): string =>
             ) : (
                 <List>
                     {
-                        data?.data.results.map( (pokemon, idx) =>(
-                            <StyledLink to={`/${idx+1}`}>
+                        data?.pages.map((page)=>{
+                            
+                            const pokemonArray = page.data.results;
+                            
+                            return(
+                                pokemonArray.map((pokemon, idx)=>(
+                                    <StyledLink to={`/${idx+1}`} ref ={ref}>
+                                    <ListItem key={pokemon.name}>
+                                        <Image src={getImageUrl(idx +1)}/>
+                                        <Name>{pokemon.name}</Name>
+                                        <Index>{formatNumbering(idx+1)}</Index>
+                                    </ListItem>
+                                 </StyledLink>
+                                ))
+                            )
+                            
+                        })
+                    }
+                    {/* {
+                        data?.pages.map((page)=>{
+                            const response = page.data.results;
+                            response.results.map((pokemon, idx) => (
+                                <StyledLink to={`/${idx+1}`}>
                                 <ListItem key={pokemon.name}>
                                     <Image src={getImageUrl(idx +1)}/>
                                     <Name>{pokemon.name}</Name>
                                     <Index>{formatNumbering(idx+1)}</Index>
                                 </ListItem>
-                        </StyledLink>
-                        ))
-                    }
+                             </StyledLink>
+                            ))
+                        })
+                    } */}
             </List>
             )
         }
