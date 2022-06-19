@@ -2,6 +2,7 @@ import styled from "@emotion/styled"
 import PokemonList from "../features/pokemon";
 
 const Base = styled.div`
+  position: absolute;
   padding: 12px 18px;
   overflow: hidden;
 `;

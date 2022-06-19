@@ -10,6 +10,9 @@ import useSpecies from "../hooks/useSpecies";
 import { PokemonResponse } from "../types";
 import styled from '@emotion/styled/macro';
 
+const Base = styled.div`
+    position: absolute;
+`;
 
 const Container = styled.section`
   display: flex;
@@ -73,7 +76,7 @@ const DetailPage = () => {
     }
 
     return(
-        <>
+        <Base>
             <PokemonInfo id={id ? id :''} name={name} types={types} color={color}/>
             <Tabs tab={selectedTab} onClick={handleClick} color={{name:"red", url:""}}/>
             {
@@ -113,7 +116,7 @@ const DetailPage = () => {
                     />
                 )
             }
-        </>
+        </Base>
     )
 }
 
