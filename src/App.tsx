@@ -12,19 +12,21 @@ function App() {
   const location = useLocation();
 
   return (
-  
-    <TransitionGroup >
-      <CSSTransition
-        key={location.pathname}
-        classNames={"right"}
-        timeout={300}
-      >
-          <Routes location={location}>
-            <Route path ='/' element={<IndexPage/>}/>
-            <Route path ='/:id' element={<DetailPage/>}/>
-          </Routes>
-      </CSSTransition>
-    </TransitionGroup>
+    
+    
+      <TransitionGroup>
+        <CSSTransition
+          key={location.pathname}
+          classNames={"pop"}
+          timeout={300}
+        >
+            <Routes location={location}>
+              <Route path ='/' element={<IndexPage/>}/>
+              <Route path ='/:id' element={<DetailPage/>}/>
+            </Routes>
+        </CSSTransition>
+      </TransitionGroup>
+
  
   );
 }

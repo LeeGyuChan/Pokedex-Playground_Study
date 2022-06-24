@@ -1,4 +1,5 @@
 import styled from "@emotion/styled"
+import BackButton from "../../components/BackButton";
 import { Color, Type } from "../../types";
 import { formatNumbering, mapColorToHex, mapTypeToHex } from "../../utils";
 
@@ -69,7 +70,7 @@ const ImageWrapper = styled.div`
   position: absolute;
   width: 288px;
   height: 288px;
-  left: -96px;
+  left: 196px;
   top: -96px;
   opacity: 0.75;
 `;
@@ -92,13 +93,15 @@ const PokemonInfo = ({id, name , types, color}: Props) => {
     return (
 
         <Base color={mapColorToHex(color?.name)}>
-            <ImageWrapper>
-              <Image src="/assets/pocketball.svg" />
-            </ImageWrapper>
             <InfoWrapper>
+              <BackButton/>
                 <Name>{name}</Name>
                 <Index>{formatNumbering(id)}</Index>
             </InfoWrapper>
+            <ImageWrapper>
+              <Image src="/assets/pocketball.svg" />
+            </ImageWrapper>
+
             <TypeList>
                 {
                     types?.map(({type}, idx) =>(
